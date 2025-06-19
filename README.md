@@ -1,11 +1,11 @@
 
-# Personal Resources
+# CurateHub
 
 Website with the resources that i've been saving related to web development.
 
 ## Screenshots
 
-![App Screenshot](/public/screenshots/personal-resources.vercel.app_.webp)
+![App Screenshot](/public/screenshots/curatehub-screenshot.webp)
 
 
 ## Categories
