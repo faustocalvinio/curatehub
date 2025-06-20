@@ -5,7 +5,7 @@ Website with the resources that i've been saving related to web development.
 
 ## Screenshots
 
-![App Screenshot](/public/screenshots/curatehub-screenshot.webp)
+![App Screenshot](/public/screenshots/ss-curate.webp)
 
 
 ## Categories
