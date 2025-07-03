@@ -1,19 +1,14 @@
 {
-  "name": "personal-resources",
+  "name": "new-curatehub",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^5.0.0",
-    "astro": "^3.2.0",
-    "flowbite": "^1.8.1",
-    "sharp": "^0.32.6",
-    "tailwindcss": "^3.0.24"
+    "astro": "^5.11.0"
   }
 }
