@@ -1,0 +1,133 @@
+---
+export async function getStaticPaths() {
+   return [
+      { params: { category: "ai" } },
+      { params: { category: "apis" } },
+      { params: { category: "html" } },
+      { params: { category: "css" } },
+      { params: { category: "ui" } },
+      { params: { category: "react" } },
+      { params: { category: "ideas" } },
+      { params: { category: "tools" } },
+      { params: { category: "javascript" } },
+      { params: { category: "interviews" } },
+      { params: { category: "challenges" } },
+      { params: { category: "learning" } },
+      { params: { category: "cheatsheets" } },
+      { params: { category: "jobs" } },
+      { params: { category: "icons" } },
+      { params: { category: "nextjs" } },
+      { params: { category: "images" } },
+   ];
+}
+import Layout from "../../layouts/Layout.astro";
+import Card from "../../components/Card.astro";
+import CategoryTitle from "../../components/CategoryTitle.astro";
+
+const { category } = Astro.params as { category: keyof typeof titleMap };
+
+let items: any[] = [];
+
+switch (category) {
+   case "ai":
+      items = await Astro.glob("../../../content/ai/*.md");
+      break;
+   case "apis":
+      items = await Astro.glob("../../../content/apis/*.md");
+      break;
+   case "html":
+      items = await Astro.glob("../../../content/html/*.md");
+      break;
+   case "css":
+      items = await Astro.glob("../../../content/css/*.md");
+      break;
+   case "ui":
+      items = await Astro.glob("../../../content/ui-stuff/*.md");
+      break;
+   case "react":
+      items = await Astro.glob("../../../content/react/*.md");
+      break;
+   case "ideas":
+      items = await Astro.glob("../../../content/ideas/*.md");
+      break;
+   case "tools":
+      items = await Astro.glob("../../../content/tools/*.md");
+      break;
+   case "javascript":
+      items = await Astro.glob("../../../content/javascript/*.md");
+      break;
+   case "interviews":
+      items = await Astro.glob("../../../content/interviews/*.md");
+      break;
+   case "challenges":
+      items = await Astro.glob("../../../content/challenges/*.md");
+      break;
+   case "learning":
+      items = await Astro.glob("../../../content/learning/*.md");
+      break;
+   case "cheatsheets":
+      items = await Astro.glob("../../../content/cheatsheets/*.md");
+      break;
+   case "jobs":
+      items = await Astro.glob("../../../content/jobs/*.md");
+      break;
+   case "icons":
+      items = await Astro.glob("../../../content/icons/*.md");
+      break;
+   case "nextjs":
+      items = await Astro.glob("../../../content/nextjs/*.md");
+      break;
+   case "images":
+      items = await Astro.glob("../../../content/images-stuff/*.md");
+      break;
+   default:
+      items = [];
+}
+
+const titleMap = {
+   ai: "AI Resources",
+   apis: "API Resources",
+   html: "HTML Resources",
+   css: "CSS Resources",
+   ui: "UI Resources",
+   react: "React Resources",
+   ideas: "Ideas Resources",
+   tools: "Tools Resources",
+   javascript: "JavaScript Resources",
+   interviews: "Interviews Resources",
+   challenges: "Challenges Resources",
+   learning: "Learning Resources",
+   cheatsheets: "Cheatsheets Resources",
+   jobs: "Jobs Resources",
+   icons: "Icons Resources",
+   nextjs: "Next.js Resources",
+   images: "Images Resources",
+};
+
+const title = titleMap[category] || "Resources";
+---
+
+<Layout title={title}>
+   <main>
+      <CategoryTitle title={title} />
+      <ul
+         class="flex flex-row flex-wrap gap-2 justify-center"
+         transition:name="list"
+      >
+         {
+            items.map((item) => (
+               <Card
+                  title={item.frontmatter.title}
+                  description={item.frontmatter.description}
+                  link={item.frontmatter.link}
+                  image={
+                     item.frontmatter.imageURL !== undefined
+                        ? item.frontmatter.imageURL
+                        : "https://res.cloudinary.com/dc6mrv5cb/image/upload/v1723451406/personal-resources/6894461_xudyti.jpg"
+                  }
+               />
+            ))
+         }
+      </ul>
+   </main>
+</Layout>
