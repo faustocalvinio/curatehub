@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+
+::view-transition-old(hola),
+::view-transition-new(hola) {
+    animation-duration: 2s;
+    animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+::view-transition-old(hola) {
+    animation-name: hola-exit;
+}
+
+::view-transition-new(hola) {
+    animation-name: hola-enter;
+}
+
+@keyframes hola-exit {
+    0% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: blur(0px);
+    }
+    80% {
+        opacity: 0.2;
+        transform: scale(0.2) rotate(-720deg);
+        filter: blur(20px);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) rotate(-1080deg);
+        filter: blur(40px);
+    }
+}
+
+@keyframes hola-enter {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(1080deg);
+        filter: blur(40px);
+    }
+    20% {
+        opacity: 0.2;
+        transform: scale(0.2) rotate(720deg);
+        filter: blur(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: blur(0px);
+    }
+}
