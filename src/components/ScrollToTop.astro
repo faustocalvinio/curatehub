@@ -1,0 +1,39 @@
+---
+
+---
+
+<button
+   id="scrollToTopBtn"
+   style="transform: translateY(20px);transition: opacity 0.3s ease, transform 0.3s ease"
+   class="block fixed bottom-5 right-5 p-1 cursor-pointer border-r-0 opacity-0 border-none rounded bg-black text-white dark:text-black dark:bg-white"
+>
+   <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="35"
+      height="35"
+      viewBox="0 0 24 24"
+      ><path
+         fill="currentColor "
+         d="m11 7.825l-4.9 4.9q-.3.3-.7.288t-.7-.313q-.275-.3-.288-.7t.288-.7l6.6-6.6q.15-.15.325-.212T12 4.425t.375.063t.325.212l6.6 6.6q.275.275.275.688t-.275.712q-.3.3-.712.3t-.713-.3L13 7.825V19q0 .425-.288.713T12 20t-.712-.288T11 19z"
+      ></path></svg
+   >
+</button>
+
+<script>
+   window.addEventListener("scroll", () => {
+      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+      if (window.scrollY > 200) {
+         scrollToTopBtn!.style.opacity = "1";
+         scrollToTopBtn!.style.transform = "translateY(0)";
+      } else {
+         scrollToTopBtn!.style.opacity = "0";
+         scrollToTopBtn!.style.transform = "translateY(20px)";
+      }
+   });
+   document.getElementById("scrollToTopBtn")!.addEventListener("click", () => {
+      window.scrollTo({
+         top: 0,
+         behavior: "smooth",
+      });
+   });
+</script>

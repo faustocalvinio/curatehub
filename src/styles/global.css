@@ -1,5 +1,37 @@
 @import "tailwindcss";
 
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: #d1d5db; /* bg-gray-300 */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #64748b; /* dark:bg-slate-800 */
+    border-radius: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar {
+        background-color: #1e293b; /* dark:bg-slate-800 */
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #334155; /* slightly lighter for thumb in dark */
+    }
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #64748b #d1d5db;
+}
+@media (prefers-color-scheme: dark) {
+    * {
+        scrollbar-color: #334155 #1e293b;
+    }
+}
+
+
 ::view-transition-old(list),
 ::view-transition-new(list) {
     animation-duration: 0.5s;
