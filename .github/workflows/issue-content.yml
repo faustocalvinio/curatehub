@@ -32,7 +32,6 @@ jobs:
           git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
           git add .
           git commit -m "chore: add file generated from issue #${{ github.event.issue.number }}" || echo "No changes to commit"
-          git push origin HEAD
 
       - name: Check remote origin
         run: git remote -v
