@@ -1,9 +1,9 @@
-const fs = require("fs");
-const path = require("path");
-const core = require("@actions/core");
-const github = require("@actions/github");
+import fs from "fs";
+import path from "path";
+import * as core from "@actions/core";
+import * as github from "@actions/github";
 
-async function generateFile(link, title, description, imageURL) {
+export async function generateFile(link, title, description, imageURL) {
    const issueLabels = github.context.payload.issue.labels.map(
       (label) => label.name
    );
@@ -18,7 +18,7 @@ imageURL: '${imageURL}'
 `;
 
       const filePath = path.join(
-         __dirname,
+         path.dirname(new URL(import.meta.url).pathname),
          `../generated-issues/${title.replace(/\s+/g, "-").toLowerCase()}.md`
       );
 
@@ -32,5 +32,3 @@ imageURL: '${imageURL}'
       );
    }
 }
-
-module.exports = { generateFile };
