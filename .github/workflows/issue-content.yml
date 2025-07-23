@@ -23,7 +23,7 @@ jobs:
         run: node src/generateFile.js "${{ github.event.issue.html_url }}" "${{ github.event.issue.title }}" "${{ github.event.issue.body }}" "${{ github.event.issue.labels }}"
 
 
-      - name: Push changes
+      - name: Commit and push changes
         env:
           TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
@@ -33,3 +33,4 @@ jobs:
           git add .
           git commit -m "chore: add file generated from issue #${{ github.event.issue.number }}" || echo "No changes to commit"
           git push origin HEAD
+
