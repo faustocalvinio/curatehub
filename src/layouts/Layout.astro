@@ -1,78 +1,81 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.astro";
+import "../styles/global.css";
+
 interface Props {
-   title: string;
+	title: string;
 }
 const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="description" content="Astro description" />
-      <meta name="viewport" content="width=device-width" />
-      <link rel="icon" type="image/svg+xml" href="/pencil.png" />
+<html lang="en" view-transition>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/pencil.png" />
 
-      <meta name="generator" content={Astro.generator} />
-      <title>{title} - My Personal Resources</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link
-         href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
-         rel="stylesheet"
-      />
-      <script defer>
-         if (
-            localStorage.getItem("color-theme") === "dark" ||
-            (!("color-theme" in localStorage) &&
-               window.matchMedia("(prefers-color-scheme: dark)").matches)
-         ) {
-            document.documentElement.classList.add("dark");
-         } else {
-            document.documentElement.classList.remove("dark");
-         }
-      </script>
-   </head>
-   <body class="bg-gray-300 dark:bg-slate-800">
-      <Navbar />
-      <main class="pt-16 max-w-[1300px] mx-auto max-[1350px]:px-6 max-md:px-0">
-         <slot />
-      </main>
-      <Footer />
-   </body>
+		<meta name="generator" content={Astro.generator} />
+		<title>{title} - My Personal Resources</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<script defer>
+			if (
+				navigator.platform.startsWith("Win") &&
+				window.matchMedia("(prefers-color-scheme: dark)").matches
+			) {
+				document.documentElement.classList.add("dark");
+			} else {
+				document.documentElement.classList.remove("dark");
+			}
+		</script>
+	</head>
+	<body class="bg-gray-300 dark:bg-slate-800">
+		<Navbar />
+		<ClientRouter />
+		<main class="pt-16 max-w-[1300px] mx-auto max-[1350px]:px-6 max-md:px-0">
+			<slot />
+		</main>
+		<Footer />
+	</body>
 </html>
 <style is:global>
-   ::selection {
-      color: #fff;
-      background-color: #494949;
-   }
-   .dark ::selection {
-      background-color: #fff;
-      color: #000;
-   }
-   .dark ::-webkit-scrollbar {
-      width: 12px;
-   }
+	::selection {
+		color: #fff;
+		background-color: #494949;
+	}
+	.dark ::selection {
+		background-color: #fff;
+		color: #000;
+	}
+	.dark ::-webkit-scrollbar {
+		width: 12px;
+	}
 
-   .dark ::-webkit-scrollbar-track {
-      background: #111827;
-   }
+	.dark ::-webkit-scrollbar-track {
+		background: #111827;
+	}
 
-   .dark ::-webkit-scrollbar-thumb {
-      background: #414141;
-   }
+	.dark ::-webkit-scrollbar-thumb {
+		background: #414141;
+	}
 
-   ::-webkit-scrollbar {
-      width: 12px;
-   }
+	::-webkit-scrollbar {
+		width: 12px;
+	}
 
-   ::-webkit-scrollbar-track {
-      background: #ffffff;
-   }
+	::-webkit-scrollbar-track {
+		background: #ffffff;
+	}
 
-   ::-webkit-scrollbar-thumb {
-      background: #b3b3b3;
-   }
+	::-webkit-scrollbar-thumb {
+		background: #b3b3b3;
+	}
 </style>

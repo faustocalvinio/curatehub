@@ -1,0 +1,23 @@
+name: Issue Content Generator
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  generate-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate file from issue
+        run: node src/generateFile.js "${{ github.event.issue.html_url }}" "${{ github.event.issue.title }}" "${{ github.event.issue.body }}" "${{ github.event.issue.labels }}"
