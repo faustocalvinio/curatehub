@@ -27,11 +27,12 @@ jobs:
         env:
           TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
+          echo "🔐 Remotely setting origin with token"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
+          git remote -v  # Verifica que el token esté en la URL
           git add .
-          git commit -m "chore: add file generated from issue #${{ github.event.issue.number }}" || echo "No changes to commit"
+          git commit -m "chore: add file generated from issue #${{ github.event.issue.number }}" || echo "⚠️ No changes to commit"
+          git push origin HEAD
 
-      - name: Check remote origin
-        run: git remote -v
