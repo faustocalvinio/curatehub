@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import * as core from "@actions/core";
 import * as github from "@actions/github";
 
 // Extrae los datos del cuerpo del issue (formato YAML simple)
@@ -17,17 +16,8 @@ function parseBody(body) {
    return data;
 }
 
-// Función principal
-export async function generateFile(link, title, description, imageURL) {
-   const issueLabels = github.context.payload.issue.labels.map(
-      (label) => label.name
-   );
-
-   // Toma los argumentos de la CLI
-   // [node, script, issue_url, file_name, body, labels]
-   const [, , issue_url, file_name, body, labelsRaw] = process.argv;
-
-   // Procesa las etiquetas
+// Genera y guarda el archivo
+function generateFile(issue_url, file_name, body, labelsRaw) {
    let labels = [];
    try {
       labels = JSON.parse(labelsRaw.replace(/'/g, '"'));
@@ -35,7 +25,6 @@ export async function generateFile(link, title, description, imageURL) {
       labels = [];
    }
 
-   // Solo sigue si tiene las etiquetas requeridas
    if (
       labels.some((l) => l.name === "content") &&
       labels.some((l) => l.name === "javascript")
@@ -47,10 +36,9 @@ title: '${data.title || ""}'
 description: '${data.description || ""}'
 link: '${data.link || ""}'
 imageURL: '${data.imageURL || ""}'
----
-`;
+generatedAt: '${new Date().toISOString()}'
+---`;
 
-      // Puedes cambiar la ruta de salida aquí
       const filePath = path.join(
          process.cwd(),
          "content/javascript",
@@ -59,11 +47,16 @@ imageURL: '${data.imageURL || ""}'
 
       fs.mkdirSync(path.dirname(filePath), { recursive: true });
       fs.writeFileSync(filePath, content);
-
       console.log(`✅ File created: ${filePath}`);
    } else {
       console.warn(
-         'Issue does not have the required labels: "content" and "javascript".'
+         '⚠️ Issue does not have the required labels: "content" and "javascript".'
       );
    }
+}
+
+// Ejecutar si se llama desde la CLI
+if (require.main === module) {
+   const [, , issue_url, file_name, body, labelsRaw] = process.argv;
+   generateFile(issue_url, file_name, body, labelsRaw);
 }
