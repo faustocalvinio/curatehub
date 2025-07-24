@@ -55,8 +55,8 @@ generatedAt: '${new Date().toISOString()}'
    }
 }
 
-// Ejecutar si se llama desde la CLI
-if (require.main === module) {
+// Ejecutar si se llama desde la CLI (compatible con ESModules)
+if (import.meta.url === `file://${process.argv[1]}`) {
    const [, , issue_url, file_name, body, labelsRaw] = process.argv;
    generateFile(issue_url, file_name, body, labelsRaw);
 }
