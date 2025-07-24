@@ -8,9 +8,12 @@ jobs:
   delete-file:
     runs-on: ubuntu-latest
     if: contains(join(github.event.issue.labels.*.name, ','), 'delete')
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false # necesario para usar un token personalizado
 
       - name: Delete file from issue title
         run: |
@@ -22,14 +25,27 @@ jobs:
             echo "File $FILE_TO_DELETE not found"
           fi
 
-      - name: Commit and push changes
-        env:
-          TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+
+      - name: Check if token exists
+        run: |
+          if [ -z "${{ secrets.PERSONAL_TOKEN }}" ]; then
+            echo "❌ TOKEN is EMPTY or NOT set"
+            exit 1
+          else
+            echo "✅ TOKEN is set"
+          fi
+
+      - name: Set Git config
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
+
+      - name: Commit and Push changes
+        env:
+          TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          git add .
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore: deleted file from issue #${{ github.event.issue.number }}"
           git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:main
-          echo "File removed successfully"
+          echo "File deleted successfully"
