@@ -25,10 +25,14 @@ function generateFile(issue_url, file_name, body, labelsRaw) {
       labels = [];
    }
 
-   if (
-      labels.some((l) => l.name === "content") &&
-      labels.some((l) => l.name === "javascript")
-   ) {
+   // Agrega este log para ver cómo llegan las etiquetas
+   console.log("Labels recibidas:", labels);
+
+   // Mejora la condición para aceptar tanto objetos como strings
+   const labelNames = labels.map((l) => (typeof l === "string" ? l : l.name));
+   console.log("Nombres de etiquetas:", labelNames);
+
+   if (labelNames.includes("content") && labelNames.includes("javascript")) {
       const data = parseBody(body);
 
       const content = `---
