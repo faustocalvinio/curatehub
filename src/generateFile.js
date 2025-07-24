@@ -19,6 +19,7 @@ function parseBody(body) {
 // Genera y guarda el archivo
 function generateFile(issue_url, file_name, body, labelsRaw) {
    let labels = [];
+   console.log("Labels raw:", labelsRaw);
    try {
       labels = JSON.parse(labelsRaw.replace(/'/g, '"'));
    } catch {
