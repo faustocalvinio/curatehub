@@ -31,4 +31,5 @@ jobs:
           git add -A
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore: deleted file from issue #${{ github.event.issue.number }}"
-          git push
+          git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:main
+          echo "File removed successfully"
