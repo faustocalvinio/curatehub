@@ -7,7 +7,7 @@ on:
 jobs:
   generate-file:
     runs-on: ubuntu-latest
-
+    if: contains(join(github.event.issue.labels.*.name, ','), 'content')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
