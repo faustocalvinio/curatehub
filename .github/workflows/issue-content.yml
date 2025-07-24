@@ -25,10 +25,10 @@ jobs:
       - name: Generate file from issue
         run: |
           node src/generateFile.js \
-          "${{ github.event.issue.html_url }}" \
-          "${{ github.event.issue.title }}" \
-          "${{ github.event.issue.body }}" \
-          "${{ github.event.issue.labels }}"
+            "${{ github.event.issue.html_url }}" \
+            "${{ github.event.issue.title }}.md" \
+            "${{ github.event.issue.body }}" \
+            "${{ toJson(github.event.issue.labels) }}"
 
       - name: Check if token exists
         run: |
