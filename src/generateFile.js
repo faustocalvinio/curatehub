@@ -23,15 +23,22 @@ function generateFile(issue_url, file_name, body, labelsRaw) {
 
    let labels = [];
    try {
-      // Si labelsRaw ya es un array (por GitHub Actions), úsalo directamente
       if (Array.isArray(labelsRaw)) {
          labels = labelsRaw;
       } else if (typeof labelsRaw === "string") {
-         // Intenta parsear como JSON
-         labels = JSON.parse(labelsRaw.replace(/'/g, '"'));
+         try {
+            // Primer intento: parsear como JSON válido
+            labels = JSON.parse(labelsRaw);
+         } catch {
+            // Fallback: extraer los nombres con regex si no es JSON válido
+            const matches = [
+               ...labelsRaw.matchAll(/name:\s*([a-zA-Z0-9_-]+)/g),
+            ];
+            labels = matches.map((m) => ({ name: m[1] }));
+         }
       }
    } catch (err) {
-      console.log("Error al parsear labelsRaw:", err);
+      console.log("Error al procesar labelsRaw:", err);
       labels = [];
    }
 
