@@ -18,18 +18,25 @@ function parseBody(body) {
 
 // Genera y guarda el archivo
 function generateFile(issue_url, file_name, body, labelsRaw) {
+   console.log("Labels raw (tipo):", typeof labelsRaw);
+   console.log("Labels raw (valor):", labelsRaw);
+
    let labels = [];
-   console.log("Labels raw:", labelsRaw);
    try {
-      labels = JSON.parse(labelsRaw.replace(/'/g, '"'));
-   } catch {
+      // Si labelsRaw ya es un array (por GitHub Actions), úsalo directamente
+      if (Array.isArray(labelsRaw)) {
+         labels = labelsRaw;
+      } else if (typeof labelsRaw === "string") {
+         // Intenta parsear como JSON
+         labels = JSON.parse(labelsRaw.replace(/'/g, '"'));
+      }
+   } catch (err) {
+      console.log("Error al parsear labelsRaw:", err);
       labels = [];
    }
 
-   // Agrega este log para ver cómo llegan las etiquetas
-   console.log("Labels recibidas:", labels);
+   console.log("Labels procesadas:", labels);
 
-   // Mejora la condición para aceptar tanto objetos como strings
    const labelNames = labels.map((l) => (typeof l === "string" ? l : l.name));
    console.log("Nombres de etiquetas:", labelNames);
 
