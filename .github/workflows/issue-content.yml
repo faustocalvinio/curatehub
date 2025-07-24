@@ -7,9 +7,12 @@ on:
 jobs:
   generate-file:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          persist-credentials: false # necesario para usar un token personalizado
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -20,7 +23,12 @@ jobs:
         run: npm install
 
       - name: Generate file from issue
-        run: node src/generateFile.js "${{ github.event.issue.html_url }}" "${{ github.event.issue.title }}" "${{ github.event.issue.body }}" "${{ github.event.issue.labels }}"
+        run: |
+          node src/generateFile.js \
+          "${{ github.event.issue.html_url }}" \
+          "${{ github.event.issue.title }}" \
+          "${{ github.event.issue.body }}" \
+          "${{ github.event.issue.labels }}"
 
       - name: Check if token exists
         run: |
@@ -31,15 +39,17 @@ jobs:
             echo "✅ TOKEN is set"
           fi
 
+      - name: Set Git config
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-            - name: Commit and push changes
+      - name: Commit and Push changes
         env:
           TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "chore: add file generated from issue #${{ github.event.issue.number }}" || echo "⚠️ No changes to commit"
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "chore: generated file from issue #${{ github.event.issue.number }}"
           git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:main
-          echo "✅ Changes pushed successfully"
-
+          echo "Changes pushed successfully"
