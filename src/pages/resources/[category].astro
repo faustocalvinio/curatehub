@@ -30,55 +30,55 @@ let items: any[] = [];
 
 switch (category) {
    case "ai":
-      items = await Astro.glob("../../../content/ai/*.md");
+      items = Object.values(import.meta.glob("../../../content/ai/*.md", { eager: true }));
       break;
    case "apis":
-      items = await Astro.glob("../../../content/apis/*.md");
+      items = Object.values(import.meta.glob("../../../content/apis/*.md", { eager: true }));
       break;
    case "html":
-      items = await Astro.glob("../../../content/html/*.md");
+      items = Object.values(import.meta.glob("../../../content/html/*.md", { eager: true }));
       break;
    case "css":
-      items = await Astro.glob("../../../content/css/*.md");
+      items = Object.values(import.meta.glob("../../../content/css/*.md", { eager: true }));
       break;
    case "ui":
-      items = await Astro.glob("../../../content/ui-stuff/*.md");
+      items = Object.values(import.meta.glob("../../../content/ui-stuff/*.md", { eager: true }));
       break;
    case "react":
-      items = await Astro.glob("../../../content/react/*.md");
+      items = Object.values(import.meta.glob("../../../content/react/*.md", { eager: true }));
       break;
    case "ideas":
-      items = await Astro.glob("../../../content/ideas/*.md");
+      items = Object.values(import.meta.glob("../../../content/ideas/*.md", { eager: true }));
       break;
    case "tools":
-      items = await Astro.glob("../../../content/tools/*.md");
+      items = Object.values(import.meta.glob("../../../content/tools/*.md", { eager: true }));
       break;
    case "javascript":
-      items = await Astro.glob("../../../content/javascript/*.md");
+      items = Object.values(import.meta.glob("../../../content/javascript/*.md", { eager: true }));
       break;
    case "interviews":
-      items = await Astro.glob("../../../content/interviews/*.md");
+      items = Object.values(import.meta.glob("../../../content/interviews/*.md", { eager: true }));
       break;
    case "challenges":
-      items = await Astro.glob("../../../content/challenges/*.md");
+      items = Object.values(import.meta.glob("../../../content/challenges/*.md", { eager: true }));
       break;
    case "learning":
-      items = await Astro.glob("../../../content/learning/*.md");
+      items = Object.values(import.meta.glob("../../../content/learning/*.md", { eager: true }));
       break;
    case "cheatsheets":
-      items = await Astro.glob("../../../content/cheatsheets/*.md");
+      items = Object.values(import.meta.glob("../../../content/cheatsheets/*.md", { eager: true }));
       break;
    case "jobs":
-      items = await Astro.glob("../../../content/jobs/*.md");
+      items = Object.values(import.meta.glob("../../../content/jobs/*.md", { eager: true }));
       break;
    case "icons":
-      items = await Astro.glob("../../../content/icons/*.md");
+      items = Object.values(import.meta.glob("../../../content/icons/*.md", { eager: true }));
       break;
    case "nextjs":
-      items = await Astro.glob("../../../content/nextjs/*.md");
+      items = Object.values(import.meta.glob("../../../content/nextjs/*.md", { eager: true }));
       break;
    case "images":
-      items = await Astro.glob("../../../content/images-stuff/*.md");
+      items = Object.values(import.meta.glob("../../../content/images-stuff/*.md", { eager: true }));
       break;
    default:
       items = [];
