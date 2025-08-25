@@ -1,7 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
-import Navbar from "../components/Navbar.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -38,12 +37,11 @@ const { title } = Astro.props;
 		</script>
 	</head>
 	<body class="bg-gray-300 dark:bg-slate-800">
-		<Navbar />
 		<ClientRouter />
 		<main class="pt-16 max-w-[1300px] mx-auto max-[1350px]:px-6 max-md:px-0">
 			<slot />
+			<Footer />
 		</main>
-		<Footer />
 	</body>
 </html>
 <style is:global>
@@ -77,5 +75,8 @@ const { title } = Astro.props;
 
 	::-webkit-scrollbar-thumb {
 		background: #b3b3b3;
+	}
+	.category-content {
+		min-height: 400px;
 	}
 </style>

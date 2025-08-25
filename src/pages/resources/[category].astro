@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 }
 import Layout from "../../layouts/Layout.astro";
 import Card from "../../components/Card.astro";
-import CategoryTitle from "../../components/CategoryTitle.astro";
+import CategoryNav from "../../components/CategoryNav.astro";
 
 const { category } = Astro.params as { category: keyof typeof titleMap };
 
@@ -108,26 +108,38 @@ const title = titleMap[category] || "Resources";
 ---
 
 <Layout title={title}>
-   <main>
-      <CategoryTitle title={title} />
-      <ul
-         class="flex flex-row flex-wrap gap-2 justify-center"
-         transition:name="list"
-      >
-         {
-            items.map((item) => (
-               <Card
-                  title={item.frontmatter.title}
-                  description={item.frontmatter.description}
-                  link={item.frontmatter.link}
-                  image={
-                     item.frontmatter.imageURL !== undefined
-                        ? item.frontmatter.imageURL
-                        : "https://res.cloudinary.com/dc6mrv5cb/image/upload/v1723451406/personal-resources/6894461_xudyti.jpg"
-                  }
-               />
-            ))
-         }
-      </ul>
-   </main>
+   <div class="flex flex-col mx-auto w-full max-sm:w-[95%]">
+      
+
+      <CategoryNav currentCategory={category} />
+
+      <div class="category-content" transition:name="category-content">
+         <h2
+            class="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white"
+            transition:name="category-title"
+         >
+            {title}
+         </h2>
+
+         <ul
+            class="flex flex-row flex-wrap gap-4 justify-center"
+            transition:name="resources-grid"
+         >
+            {
+               items.map((item) => (
+                  <Card
+                     title={item.frontmatter.title}
+                     description={item.frontmatter.description}
+                     link={item.frontmatter.link}
+                     image={
+                        item.frontmatter.imageURL !== undefined
+                           ? item.frontmatter.imageURL
+                           : "https://res.cloudinary.com/dc6mrv5cb/image/upload/v1723451406/personal-resources/6894461_xudyti.jpg"
+                     }
+                  />
+               ))
+            }
+         </ul>
+      </div>
+   </div>
 </Layout>

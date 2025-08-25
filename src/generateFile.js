@@ -1,8 +1,6 @@
 import fs from "fs";
 import path from "path";
-import * as github from "@actions/github";
 
-// Extrae los datos del cuerpo del issue (formato YAML simple)
 function parseBody(body) {
    const lines = body
       .split("\n")
@@ -16,7 +14,6 @@ function parseBody(body) {
    return data;
 }
 
-// Genera y guarda el archivo
 function generateFile(issue_url, file_name, body, labelsRaw) {
    console.log("Labels raw (tipo):", typeof labelsRaw);
    console.log("Labels raw (valor):", labelsRaw);
@@ -27,10 +24,8 @@ function generateFile(issue_url, file_name, body, labelsRaw) {
          labels = labelsRaw;
       } else if (typeof labelsRaw === "string") {
          try {
-            // Primer intento: parsear como JSON válido
             labels = JSON.parse(labelsRaw);
          } catch {
-            // Fallback: extraer los nombres con regex si no es JSON válido
             const matches = [
                ...labelsRaw.matchAll(/name:\s*([a-zA-Z0-9_-]+)/g),
             ];
@@ -74,7 +69,6 @@ generatedAt: '${new Date().toISOString()}'
    }
 }
 
-// Ejecutar si se llama desde la CLI (compatible con ESModules)
 if (import.meta.url === `file://${process.argv[1]}`) {
    const [, , issue_url, file_name, body, labelsRaw] = process.argv;
    generateFile(issue_url, file_name, body, labelsRaw);

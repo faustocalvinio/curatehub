@@ -1,0 +1,90 @@
+---
+const { currentCategory } = Astro.props;
+
+import aiSvg from "../assets/svg/ai.svg";
+import apiSvg from "../assets/svg/api.svg";
+import cssSvg from "../assets/svg/css.svg";
+import challengeSvg from "../assets/svg/challenge.svg";
+import cheatsheetsSvg from "../assets/svg/cheatsheets.svg";
+import htmlSvg from "../assets/svg/html.svg";
+import iconsSvg from "../assets/svg/icons.svg";
+import ideasSvg from "../assets/svg/ideas.svg";
+import imgSvg from "../assets/svg/image.svg";
+import interviewSvg from "../assets/svg/mic.svg";
+import learningSvg from "../assets/svg/learning.svg";
+import jobsSvg from "../assets/svg/jobs.svg";
+import jsSvg from "../assets/svg/js.svg";
+import nextSvg from "../assets/svg/nextjs.svg";
+import reactSvg from "../assets/svg/react.svg";
+import toolsSvg from "../assets/svg/tools.svg";
+import uiSvg from "../assets/svg/ui.svg";
+
+const categories = [
+   { key: "ai", label: "AI", icon: aiSvg.src },
+   { key: "apis", label: "APIs", icon: apiSvg.src },
+   { key: "html", label: "HTML", icon: htmlSvg.src },
+   { key: "css", label: "CSS", icon: cssSvg.src },
+   { key: "ui", label: "UI", icon: uiSvg.src },
+   { key: "react", label: "React", icon: reactSvg.src },
+   { key: "ideas", label: "Ideas", icon: ideasSvg.src },
+   { key: "tools", label: "Tools", icon: toolsSvg.src },
+   { key: "javascript", label: "JavaScript", icon: jsSvg.src },
+   { key: "interviews", label: "Interviews", icon: interviewSvg.src },
+   { key: "challenges", label: "Challenges", icon: challengeSvg.src },
+   { key: "learning", label: "Learning", icon: learningSvg.src },
+   { key: "cheatsheets", label: "CheatSheets", icon: cheatsheetsSvg.src },
+   { key: "jobs", label: "Jobs", icon: jobsSvg.src },
+   { key: "icons", label: "Icons", icon: iconsSvg.src },
+   { key: "nextjs", label: "Next.js", icon: nextSvg.src },
+   { key: "images", label: "Images", icon: imgSvg.src },
+];
+---
+
+<nav class="mb-8" transition:name="category-nav">
+   <div class="flex flex-wrap gap-2 justify-center mb-6">
+      {
+         categories.map(({ key, label, icon }) => (
+            <a
+               href={`/resources/${key}`}
+               class={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-md ${
+                  currentCategory === key
+                     ? "bg-blue-500 text-white shadow-lg ring-2 ring-blue-300"
+                     : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+               }`}
+               data-category={key}
+            >
+               <img src={icon} alt={`${label} icon`} class="w-4 h-4" />
+               {label}
+            </a>
+         ))
+      }
+   </div>
+</nav>
+
+<style>
+   /* Efecto hover suave */
+   a[data-category] {
+      position: relative;
+      overflow: hidden;
+   }
+
+   a[data-category]:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+         90deg,
+         transparent,
+         rgba(255, 255, 255, 0.2),
+         transparent
+      );
+      transition: left 0.5s;
+   }
+
+   a[data-category]:hover:before {
+      left: 100%;
+   }
+</style>
